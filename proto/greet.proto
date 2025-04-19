@@ -1,0 +1,44 @@
+//working with proto3
+syntax="proto3";
+
+option go_package="./proto";
+
+// proto service name
+package greet_service;
+
+// same format goes with all proto projects
+service GreetService{
+  // 4 types of rpc calls listed below
+
+
+  rpc HelloService(NoParam) returns (HelloResponse);
+
+  //whichever side it has a stream , that side stream a connection becomes 
+
+  // client side stream - here client sends a stream
+  rpc sayHelloClientStreaming(stream HelloRequest) returns (MessageList);
+
+  // server side stream - clients send a request and server returns a stream
+  rpc sayHelloServerStreaming(NamesList) returns (stream HelloResponse);
+
+  rpc sayHelloBiDirectionalStream(stream HelloRequest) returns (stream HelloResponse);
+}  
+
+message NoParam{};
+
+message HelloRequest{
+  string message = 1;
+}
+
+message HelloResponse{
+  string message = 1;
+}
+
+message MessageList{
+  repeated string messages = 1;
+}
+
+message NamesList{
+  repeated string names = 1;
+}
+
